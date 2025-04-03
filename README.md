@@ -1,4 +1,4 @@
-# 🏋️ RepTrack API
+# 🏋️ RepTrack
 
 RepTrack is a RESTful API built with Spring Boot that helps users log, manage, and track their workouts and exercises over time. Designed with scalability and gym integration in mind, this backend will eventually power a full-stack fitness tracking platform for both users and gym owners.
 
