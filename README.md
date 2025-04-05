@@ -45,16 +45,18 @@ RepTrack is a RESTful API built with Spring Boot that helps users log, manage, a
 
 ---
 
-## 📬 API Endpoints (Current)
+## 📬 API Endpoints
 
-| Method | Endpoint                       | Description               |
-|--------|--------------------------------|---------------------------|
-| GET    | `/api/v1/exercises`            | Get all exercises         |
-| POST   | `/api/v1/exercises`            | Add a new exercise        |
-| PUT    | `/api/v1/exercises/{id}`       | Update exercise by ID     |
-| DELETE | `/api/v1/exercises/{id}`       | Delete exercise by ID     |
-
-> More endpoints coming soon for workout logs and user accounts 🔒
+| Method | Endpoint                               | Description                      |
+|--------|----------------------------------------|----------------------------------|
+| GET    | `/api/v1/exercises`                    | Get all exercises                |
+| POST   | `/api/v1/exercises`                    | Add a new exercise               |
+| PUT    | `/api/v1/exercises/{id}`               | Update exercise by ID            |
+| DELETE | `/api/v1/exercises/{id}`               | Delete exercise by ID            |
+| GET    | `/api/v1/workout-logs`                 | Get all workout logs             |
+| POST   | `/api/v1/workout-logs`                 | Add a new workout log            |
+| PUT    | `/api/v1/workout-logs/{workoutlogId}`  | Update workout log by ID         |
+| DELETE | `/api/v1/workout-logs/{workoutlogId}`  | Delete workout log by ID         |
 
 ---
 
@@ -62,9 +64,9 @@ RepTrack is a RESTful API built with Spring Boot that helps users log, manage, a
 
 - [x] Spring Boot API scaffolding
 - [x] PostgreSQL configured using Docker
-- [x] CRUD operations for exercises
+- [x] Exercise API
+- [x] Workout-logs API
 - [x] API tested using Postman
-- [ ] Workout log API
 - [ ] JWT-based Authentication
 - [ ] User roles: User & Gym Owner
 - [ ] Analytics / Progress tracking
@@ -74,7 +76,6 @@ RepTrack is a RESTful API built with Spring Boot that helps users log, manage, a
 
 ## 📈 Planned Features
 
-- Add workout logging API with relationships to exercises
 - Secure endpoints with JWT Auth
 - Create separate dashboard views for gym owners and users
 - Integrate exercise recommendation system based on available equipment
