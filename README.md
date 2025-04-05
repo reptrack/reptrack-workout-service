@@ -88,22 +88,22 @@ RepTrack is a RESTful API built with Spring Boot that helps users log, manage, a
 
 ```
 reptrack/
-├── backend/                             
+├── LICENSE
+├── README.md
+├── .gitignore
+├── .gitattributes
+├── docker-compose.yml
+├── backend/
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   ├── pom.xml
 │   ├── src/
-│   │   ├── main/java/com/reptrack/api/... 
-│   │   └── test/java/com/reptrack/api/... 
-│   ├── pom.xml                             
-│   ├── mvnw                                
-│   └── mvnw.cmd                            
-│
-├── frontend/                            
-│   └── (to be implemented)
-│
-├── .gitignore                             
-├── .gitattributes                         
-├── docker-compose.yml                     
-├── LICENSE                               
-└── README.md                                 
+│   │   ├── main/java/com/reptrack/api/...
+│   │   ├── test/java/com/reptrack/api/...
+│   │   └── resources/application.properties
+│   └── target/
+├── frontend/
+│   └── tbd                      
 ```
 
 ---
