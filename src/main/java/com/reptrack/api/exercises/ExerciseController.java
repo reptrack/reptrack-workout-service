@@ -1,6 +1,8 @@
 package com.reptrack.api.exercises;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,27 +19,30 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public List<Exercise> getExercises() {
-        return exerciseService.getExercises();
+    public ResponseEntity<List<Exercise>> getExercises() {
+        return ResponseEntity.ok(exerciseService.getExercises());
     }
 
     @PostMapping
-    public void registerNewExercise(@RequestBody Exercise exercise) {
-        exerciseService.addNewExercise(exercise);
+    public ResponseEntity<Exercise> registerNewExercise(@RequestBody Exercise exercise) {
+        Exercise saved = exerciseService.addNewExercise(exercise);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @DeleteMapping(path = "{exerciseId}")
-    public void deleteExercise(
+    public ResponseEntity<Void> deleteExercise(
             @PathVariable("exerciseId") Long exerciseId){
         exerciseService.deleteExercise(exerciseId);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping(path = "{exerciseId}")
-    public void updateExercise(
+    public ResponseEntity<String> updateExercise(
             @PathVariable("exerciseId") Long exerciseId,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description
     ) {
-                exerciseService.updateExercise(exerciseId, name, description);
+        exerciseService.updateExercise(exerciseId, name, description);
+        return ResponseEntity.ok("Exercise updated");
     }
 }
