@@ -37,7 +37,7 @@ public class WorkoutLogController {
     }
 
     @PutMapping(path = "{workoutlogId}")
-    public ResponseEntity<String> updateWorkoutlog(
+    public ResponseEntity<String> updateWorkoutLog(
             @PathVariable("workoutlogId") Long workoutlogId,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description
