@@ -22,13 +22,13 @@ public class ExerciseService {
         return exerciseRepository.findAll();
     }
 
-    public void addNewExercise(Exercise exercise) {
+    public Exercise addNewExercise(Exercise exercise) {
         Optional<Exercise> exerciseOptional = exerciseRepository
                 .findExerciseByName(exercise.getName());
         if (exerciseOptional.isPresent()) {
             throw new IllegalStateException("Exercise already added");
         }
-        exerciseRepository.save(exercise);
+        return exerciseRepository.save(exercise);
     }
 
     public void deleteExercise(Long exerciseId) {
