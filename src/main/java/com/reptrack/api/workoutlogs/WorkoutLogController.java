@@ -31,8 +31,8 @@ public class WorkoutLogController {
 
     @DeleteMapping(path = "{workoutlogId}")
     public ResponseEntity<Void> deleteWorkoutLog(
-            @PathVariable("workoutlogId") Long workoutId) {
-        workoutLogService.deleteWorkoutLog(workoutId);
+            @PathVariable("workoutlogId") Long workoutlogId) {
+        workoutLogService.deleteWorkoutLog(workoutlogId);
         return ResponseEntity.noContent().build();
     }
 

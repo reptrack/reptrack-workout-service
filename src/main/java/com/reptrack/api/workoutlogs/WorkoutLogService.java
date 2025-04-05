@@ -34,7 +34,7 @@ public class WorkoutLogService {
     public void deleteWorkoutLog(Long workoutlogId) {
         boolean exists = workoutLogRepository.existsById(workoutlogId);
         if (!exists) {
-            throw new IllegalStateException("workout log with id " + workoutlogId + " does not exists");
+            throw new IllegalStateException("workout log with id " + workoutlogId + " does not exist");
         }
         workoutLogRepository.deleteById(workoutlogId);
     }
