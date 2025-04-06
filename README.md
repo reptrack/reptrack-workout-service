@@ -1,8 +1,6 @@
-# 🏋️ reptrack-workout-service
+# 🏋️ reptrack-backend
 
-This is the **Workout Service** for the RepTrack system — a Spring Boot microservice responsible for managing **exercises** and **workout logs**. It exposes RESTful endpoints to track a user’s fitness activities over time.
-
-This service is part of the broader [RepTrack microservice architecture](https://github.com/reptrack).
+TODO
 
 ---
 
