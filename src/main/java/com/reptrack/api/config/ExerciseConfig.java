@@ -1,5 +1,7 @@
-package com.reptrack.api.exercises;
+package com.reptrack.api.config;
 
+import com.reptrack.api.repository.ExerciseRepository;
+import com.reptrack.api.model.Exercise;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

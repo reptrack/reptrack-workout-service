@@ -1,4 +1,4 @@
-package com.reptrack.api.exercises;
+package com.reptrack.api.model;
 
 import jakarta.persistence.*;
 

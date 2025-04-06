@@ -1,5 +1,6 @@
-package com.reptrack.api.workoutlogs;
+package com.reptrack.api.repository;
 
+import com.reptrack.api.model.WorkoutLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

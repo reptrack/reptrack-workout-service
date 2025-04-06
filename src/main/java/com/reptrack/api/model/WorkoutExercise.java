@@ -1,4 +1,4 @@
-package com.reptrack.api.workoutlogs;
+package com.reptrack.api.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

@@ -1,5 +1,7 @@
-package com.reptrack.api.workoutlogs;
+package com.reptrack.api.controller;
 
+import com.reptrack.api.service.WorkoutLogService;
+import com.reptrack.api.model.WorkoutLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

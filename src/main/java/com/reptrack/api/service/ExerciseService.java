@@ -1,5 +1,7 @@
-package com.reptrack.api.exercises;
+package com.reptrack.api.service;
 
+import com.reptrack.api.model.Exercise;
+import com.reptrack.api.repository.ExerciseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
