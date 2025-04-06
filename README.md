@@ -26,7 +26,3 @@ This service is part of the [RepTrack microservice architecture](https://github.
 MIT License — see [`LICENSE`](./LICENSE) for details.
 
 ---
-
-Built by **Kevin Ma**
-
-Connect with me on [GitHub](https://github.com/kevindangkhoama) or [LinkedIn](https://www.linkedin.com/in/kevin-dang-khoa-ma/) ✌️
