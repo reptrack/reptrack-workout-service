@@ -1,0 +1,3 @@
+CREATE ROLE app_admin WITH LOGIN PASSWORD 'admin';
+CREATE DATABASE reptrack OWNER app_admin;
+GRANT ALL PRIVILEGES ON DATABASE reptrack TO app_admin;
