@@ -1,4 +1,3 @@
-
 services:
   postgres:
     image: postgres:15
@@ -12,6 +11,6 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-
+      - ./init/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
 volumes:
   pgdata:
