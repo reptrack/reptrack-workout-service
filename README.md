@@ -1,4 +1,4 @@
-# 🏋️ reptrack-backend
+# 🏋️ reptrack
 
 **RepTrack** is a RESTful Spring Boot API that powers a fitness tracking application. It allows users to log workouts, manage exercises, and track progress over time.
 
