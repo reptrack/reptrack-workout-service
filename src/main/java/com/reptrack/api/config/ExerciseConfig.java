@@ -17,24 +17,21 @@ public class ExerciseConfig {
     CommandLineRunner exerciseLineRunner(
             ExerciseRepository repository) {
         return args -> {
-            Exercise barbellbenchPress = new Exercise(
-                    "Barbell Bench Press",
-                    "Bench",
-                    "Chest, Triceps, Front Delts",
-                    "Test Description",
-                    true
-                    );
+            Exercise barbellbenchPress = new Exercise();
+            barbellbenchPress.setName("Barbell Bench Press");
+            barbellbenchPress.setEquipmentName("Bench");
+            barbellbenchPress.setMusclesTargeted("Chest, Triceps, Front Delts");
+            barbellbenchPress.setDescription("Test Description");
+            barbellbenchPress.setApproved(true);
 
-            Exercise dumbbellbenchPress = new Exercise(
-                    "Dumbbell Bench Press",
-                    "Bench",
-                    "Chest, Triceps, Front Delts",
-                    "Test Description 2",
-                    true
-                    );
-            repository.saveAll(
-                    List.of(barbellbenchPress, dumbbellbenchPress)
-            );
+            Exercise dumbbellbenchPress = new Exercise();
+            dumbbellbenchPress.setName("Dumbbell Bench Press");
+            dumbbellbenchPress.setEquipmentName("Bench");
+            dumbbellbenchPress.setMusclesTargeted("Chest, Triceps, Front Delts");
+            dumbbellbenchPress.setDescription("Test Description 2");
+            dumbbellbenchPress.setApproved(true);
+
+            repository.saveAll(List.of(barbellbenchPress, dumbbellbenchPress));
         };
     }
 }

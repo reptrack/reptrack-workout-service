@@ -5,6 +5,7 @@ import com.reptrack.api.model.WorkoutLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,19 +23,23 @@ public class WorkoutLogController {
 
     @GetMapping
     public ResponseEntity<List<WorkoutLog>> getWorkoutLogs() {
-        return ResponseEntity.ok(workoutLogService.getWorkoutLogs());
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<WorkoutLog> logs = workoutLogService.getWorkoutLogsForUser(email);
+        return ResponseEntity.ok(logs);
     }
 
     @PostMapping
     public ResponseEntity<WorkoutLog> registerNewWorkoutLog(@RequestBody WorkoutLog workoutLog) {
-        WorkoutLog saved = workoutLogService.addNewWorkoutLog(workoutLog);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        WorkoutLog saved = workoutLogService.addNewWorkoutLogForUser(workoutLog, email);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @DeleteMapping(path = "{workoutlogId}")
     public ResponseEntity<Void> deleteWorkoutLog(
             @PathVariable("workoutlogId") Long workoutlogId) {
-        workoutLogService.deleteWorkoutLog(workoutlogId);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        workoutLogService.deleteWorkoutLog(workoutlogId, email);
         return ResponseEntity.noContent().build();
     }
 
@@ -42,9 +47,9 @@ public class WorkoutLogController {
     public ResponseEntity<String> updateWorkoutLog(
             @PathVariable("workoutlogId") Long workoutlogId,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description
-    ) {
-        workoutLogService.updateWorkoutLog(workoutlogId, name, description);
+            @RequestParam(required = false) String description) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        workoutLogService.updateWorkoutLog(workoutlogId, name, description, email);
         return ResponseEntity.ok("Workout log updated");
 
     }
