@@ -9,6 +9,16 @@ target/
 HELP.md
 
 # ----------------------------------------
+# Node.js & Frontend
+# ----------------------------------------
+node_modules/
+dist/
+dist-ssr/
+*.local
+coverage/
+.env*.local
+
+# ----------------------------------------
 # Build Systems
 # ----------------------------------------
 build/
@@ -18,6 +28,8 @@ build/
 # Environment & Secrets
 # ----------------------------------------
 .env
+.env.*
+!.env.example
 
 # ----------------------------------------
 # IntelliJ IDEA
@@ -31,8 +43,16 @@ build/
 # VS Code
 # ----------------------------------------
 .vscode/
+*.code-workspace
+.history/
 
 # ----------------------------------------
 # macOS
 # ----------------------------------------
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
