@@ -61,4 +61,35 @@ public class ExerciseService {
             exercise.setDescription(description);
         }
     }
+
+    @Transactional
+    public void partialUpdateExercise(Long id, Exercise incoming) {
+        Exercise exercise = exerciseRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Exercise with id " + id + " does not exist"));
+
+        if (incoming.getName() != null && !incoming.getName().isBlank()) {
+            exercise.setName(incoming.getName());
+        }
+
+        if (incoming.getDescription() != null && !incoming.getDescription().isBlank()) {
+            exercise.setDescription(incoming.getDescription());
+        }
+
+        if (incoming.getEquipmentName() != null && !incoming.getEquipmentName().isBlank()) {
+            exercise.setEquipmentName(incoming.getEquipmentName());
+        }
+
+        if (incoming.getMusclesTargeted() != null && !incoming.getMusclesTargeted().isBlank()) {
+            exercise.setMusclesTargeted(incoming.getMusclesTargeted());
+        }
+    }
+
+    @Transactional
+    public void approveExercise(Long id) {
+        Exercise exercise = exerciseRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Exercise with id " + id + " does not exist"));
+
+        exercise.setApproved(true);
+    }
+
 }

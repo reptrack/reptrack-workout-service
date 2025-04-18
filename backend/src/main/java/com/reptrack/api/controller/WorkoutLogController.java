@@ -1,10 +1,12 @@
 package com.reptrack.api.controller;
 
+import com.reptrack.api.security.user.User;
 import com.reptrack.api.service.WorkoutLogService;
 import com.reptrack.api.model.WorkoutLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +30,12 @@ public class WorkoutLogController {
         return ResponseEntity.ok(logs);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<WorkoutLog> getWorkoutLogById(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        WorkoutLog log = workoutLogService.getWorkoutLogById(id, user.getUsername());  // Use getUsername()
+        return ResponseEntity.ok(log);
+    }
+
     @PostMapping
     public ResponseEntity<WorkoutLog> registerNewWorkoutLog(@RequestBody WorkoutLog workoutLog) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -44,13 +52,12 @@ public class WorkoutLogController {
     }
 
     @PutMapping(path = "{workoutlogId}")
-    public ResponseEntity<String> updateWorkoutLog(
+    public ResponseEntity<WorkoutLog> updateWorkoutLog(
             @PathVariable("workoutlogId") Long workoutlogId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description) {
+            @RequestBody WorkoutLog updatedLog) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        workoutLogService.updateWorkoutLog(workoutlogId, name, description, email);
-        return ResponseEntity.ok("Workout log updated");
+        WorkoutLog updated = workoutLogService.updateWorkoutLog(workoutlogId, updatedLog, email);
+        return ResponseEntity.ok(updated);
 
     }
 }

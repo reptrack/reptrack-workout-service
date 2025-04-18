@@ -39,15 +39,15 @@ public class WorkoutLogConfig {
             barbellWorkout.setName(barbell.getName());
             barbellWorkout.setSets(List.of(
                     new WorkoutExercise.WorkoutSet(10, 45, true),
-                    new WorkoutExercise.WorkoutSet(8, 135, true),
-                    new WorkoutExercise.WorkoutSet(6, 185, false)
+                    new WorkoutExercise.WorkoutSet(8, 135),
+                    new WorkoutExercise.WorkoutSet(6, 185)
             ));
 
             WorkoutExercise dumbbellWorkout = new WorkoutExercise();
             dumbbellWorkout.setName(dumbbell.getName());
             dumbbellWorkout.setSets(List.of(
-                    new WorkoutExercise.WorkoutSet(12, 40, false),
-                    new WorkoutExercise.WorkoutSet(10, 50, false)
+                    new WorkoutExercise.WorkoutSet(12, 40, true),
+                    new WorkoutExercise.WorkoutSet(10, 50)
             ));
 
 

@@ -31,6 +31,9 @@ public class WorkoutExercise {
     )
     private List<WorkoutSet> sets = new ArrayList<>();
 
+    @Column(nullable = false)
+    private boolean completed = false;
+
     @ManyToOne
     @JoinColumn(name = "log_id")
     @JsonBackReference
@@ -44,5 +47,14 @@ public class WorkoutExercise {
         private int reps;
         private float weight;
         private boolean warmup;
+        private boolean completed = false;
+
+        public WorkoutSet(int reps, float weight, boolean warmup) {
+            this(reps, weight, warmup, false);
+        }
+
+        public WorkoutSet(int reps, float weight) {
+            this(reps, weight, false, false);
+        }
     }
 }

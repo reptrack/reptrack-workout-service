@@ -27,6 +27,17 @@ public class WorkoutLogService {
         this.userRepository = userRepository;
     }
 
+    public WorkoutLog getWorkoutLogById(Long id, String email) {
+        WorkoutLog log = workoutLogRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Workout log not found"));
+
+        if (!log.getUser().getEmail().equals(email)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized");
+        }
+
+        return log;
+    }
+
     public void deleteWorkoutLog(Long workoutlogId, String email) {
         WorkoutLog workoutLog = workoutLogRepository.findById(workoutlogId)
                 .orElseThrow(() -> new IllegalStateException(
@@ -40,30 +51,31 @@ public class WorkoutLogService {
     }
 
     @Transactional
-    public void updateWorkoutLog(
+    public WorkoutLog updateWorkoutLog(
             Long workoutlogId,
-            String name,
-            String description,
+            WorkoutLog newLog,
             String email) {
-        WorkoutLog workoutLog= workoutLogRepository.findById(workoutlogId)
-                .orElseThrow(() -> new IllegalStateException(
-                        "workout log with id " + workoutlogId + " does not exist"));
+        WorkoutLog existing = workoutLogRepository.findById(workoutlogId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "WorkoutLog not found"));
 
-        if (!workoutLog.getUser().getEmail().equals(email)) {
+        if (!existing.getUser().getEmail().equals(email)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized");
         }
 
-        if (name != null &&
-                name.length() > 0 &&
-                !Objects.equals(workoutLog.getName(), name)) {
-            workoutLog.setName(name);
+        if (newLog.getName() != null) {
+            existing.setName(newLog.getName());
+        }
+        if (newLog.getDescription() != null) {
+            existing.setDescription(newLog.getDescription());
+        }
+        if (newLog.getDate() != null) {
+            existing.setDate(newLog.getDate());
+        }
+        if (newLog.getExercises() != null && !newLog.getExercises().isEmpty()) {
+            existing.setExercises(newLog.getExercises());
         }
 
-        if (description != null &&
-                description.length() > 0 &&
-                !Objects.equals(workoutLog.getDescription(), description)) {
-            workoutLog.setDescription(description);
-        }
+        return workoutLogRepository.save(existing);
     }
 
     public List<WorkoutLog> getWorkoutLogsForUser(String email) {

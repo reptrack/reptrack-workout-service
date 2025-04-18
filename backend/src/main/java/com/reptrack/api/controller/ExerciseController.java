@@ -38,13 +38,20 @@ public class ExerciseController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(path = "{exerciseId}")
-    public ResponseEntity<String> updateExercise(
-            @PathVariable("exerciseId") Long exerciseId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description
+    @PatchMapping(path = "{exerciseId}")
+    public ResponseEntity<Void> patchExercise(
+            @PathVariable Long exerciseId,
+            @RequestBody Exercise partialUpdate
     ) {
-        exerciseService.updateExercise(exerciseId, name, description);
-        return ResponseEntity.ok("Exercise updated");
+        exerciseService.partialUpdateExercise(exerciseId, partialUpdate);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(path = "{exerciseId}/approve")
+    public ResponseEntity<Void> approveExercise(
+            @PathVariable Long exerciseId
+    ) {
+        exerciseService.approveExercise(exerciseId);
+        return ResponseEntity.ok().build();
     }
 }
