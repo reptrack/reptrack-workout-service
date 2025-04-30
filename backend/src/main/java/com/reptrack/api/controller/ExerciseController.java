@@ -31,27 +31,27 @@ public class ExerciseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @DeleteMapping(path = "{exerciseId}")
+    @DeleteMapping(path = "{id}")
     public ResponseEntity<Void> deleteExercise(
-            @PathVariable("exerciseId") Long exerciseId){
-        exerciseService.deleteExercise(exerciseId);
+            @PathVariable("id") Long id){
+        exerciseService.deleteExercise(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping(path = "{exerciseId}")
+    @PatchMapping(path = "{id}")
     public ResponseEntity<Void> patchExercise(
-            @PathVariable Long exerciseId,
+            @PathVariable Long id,
             @RequestBody Exercise partialUpdate
     ) {
-        exerciseService.partialUpdateExercise(exerciseId, partialUpdate);
+        exerciseService.partialUpdateExercise(id, partialUpdate);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping(path = "{exerciseId}/approve")
+    @PatchMapping(path = "{id}/approve")
     public ResponseEntity<Void> approveExercise(
-            @PathVariable Long exerciseId
+            @PathVariable Long id
     ) {
-        exerciseService.approveExercise(exerciseId);
+        exerciseService.approveExercise(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,6 +1,7 @@
 package com.reptrack.api.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.reptrack.api.dto.CreateWorkoutLogDTO;
 import com.reptrack.api.model.Exercise;
 import com.reptrack.api.model.WorkoutExercise;
 import com.reptrack.api.model.WorkoutLog;
@@ -74,10 +75,11 @@ public class WorkoutTrackingIntegrationTest {
                 Exercise.class);
 
         // 3. Create a workout log
-        WorkoutLog workoutLog = new WorkoutLog();
+        CreateWorkoutLogDTO workoutLog = new CreateWorkoutLogDTO();
         workoutLog.setName("Morning Workout");
         workoutLog.setDescription("Chest day");
         workoutLog.setDate(LocalDate.now());
+        workoutLog.setExercises(new ArrayList<>());
 
         MvcResult workoutLogResult = mockMvc.perform(post("/api/v1/workout-logs")
                 .header("Authorization", "Bearer " + authToken)

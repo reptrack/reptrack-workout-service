@@ -33,21 +33,21 @@ public class ExerciseService {
         return exerciseRepository.save(exercise);
     }
 
-    public void deleteExercise(Long exerciseId) {
-        boolean exists = exerciseRepository.existsById(exerciseId);
+    public void deleteExercise(Long id) {
+        boolean exists = exerciseRepository.existsById(id);
         if (!exists) {
-            throw new IllegalStateException("exercise with id " + exerciseId +" does not exists");
+            throw new IllegalStateException("exercise with id " + id +" does not exists");
         }
-        exerciseRepository.deleteById(exerciseId);
+        exerciseRepository.deleteById(id);
     }
 
     @Transactional
-    public void updateExercise(Long exerciseId,
+    public void updateExercise(Long id,
                                 String name,
                                 String description) {
-        Exercise exercise = exerciseRepository.findById(exerciseId)
+        Exercise exercise = exerciseRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
-                        "exercise with id " + exerciseId + " does not exist"));
+                        "exercise with id " + id + " does not exist"));
 
         if (name != null &&
             name.length() > 0 &&

@@ -1,5 +1,6 @@
 package com.reptrack.api.controller;
 
+import com.reptrack.api.dto.CreateWorkoutLogDTO;
 import com.reptrack.api.model.WorkoutLog;
 import com.reptrack.api.security.user.User;
 import com.reptrack.api.service.WorkoutLogService;
@@ -88,13 +89,27 @@ public class WorkoutLogControllerTest {
 
     @Test
     void registerNewWorkoutLog_ShouldReturnCreatedWorkoutLog() {
-        when(workoutLogService.addNewWorkoutLogForUser(testWorkoutLog, TEST_EMAIL)).thenReturn(testWorkoutLog);
+        // Given
+        CreateWorkoutLogDTO dto = new CreateWorkoutLogDTO();
+        dto.setName("Leg Day");
+        dto.setDate(LocalDate.now());
 
-        ResponseEntity<WorkoutLog> response = workoutLogController.registerNewWorkoutLog(testWorkoutLog);
+        WorkoutLog mappedWorkoutLog = new WorkoutLog();
+        mappedWorkoutLog.setId(1L);
+        mappedWorkoutLog.setName("Leg Day");
+        mappedWorkoutLog.setDate(dto.getDate());
 
+        when(workoutLogService.fromDto(dto, TEST_EMAIL)).thenReturn(mappedWorkoutLog);
+        when(workoutLogService.save(mappedWorkoutLog)).thenReturn(mappedWorkoutLog);
+
+        // When
+        ResponseEntity<WorkoutLog> response = workoutLogController.registerNewWorkoutLog(dto);
+
+        // Then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(testWorkoutLog, response.getBody());
-        verify(workoutLogService).addNewWorkoutLogForUser(testWorkoutLog, TEST_EMAIL);
+        assertEquals(mappedWorkoutLog, response.getBody());
+        verify(workoutLogService).fromDto(dto, TEST_EMAIL);
+        verify(workoutLogService).save(mappedWorkoutLog);
     }
 
     @Test

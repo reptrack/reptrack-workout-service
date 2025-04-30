@@ -29,12 +29,12 @@ public class WorkoutExerciseController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/log/{logId}")
+    @PostMapping("/log/{id}")
     public ResponseEntity<Void> addWorkoutExerciseToLog(
-            @PathVariable Long logId,
+            @PathVariable Long id,
             @RequestBody WorkoutExercise newExercise
     ) {
-        workoutExerciseService.addWorkoutExerciseToLog(logId, newExercise);
+        workoutExerciseService.addWorkoutExerciseToLog(id, newExercise);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
