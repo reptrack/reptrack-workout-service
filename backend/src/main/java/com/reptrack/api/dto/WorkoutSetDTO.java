@@ -15,5 +15,4 @@ public class WorkoutSetDTO {
     @NotNull
     private boolean warmup;
 
-    private boolean completed = false;
 }

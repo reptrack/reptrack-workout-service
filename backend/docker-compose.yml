@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   postgres:
     image: postgres:15
@@ -12,5 +14,11 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
+  redis:
+    image: redis:latest
+    container_name: reptrack-redis
+    restart: always
+    ports:
+      - "6379:6379"
 volumes:
   pgdata:

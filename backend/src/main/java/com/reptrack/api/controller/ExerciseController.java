@@ -47,11 +47,4 @@ public class ExerciseController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping(path = "{id}/approve")
-    public ResponseEntity<Void> approveExercise(
-            @PathVariable Long id
-    ) {
-        exerciseService.approveExercise(id);
-        return ResponseEntity.ok().build();
-    }
 }

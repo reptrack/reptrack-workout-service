@@ -84,12 +84,4 @@ public class ExerciseService {
         }
     }
 
-    @Transactional
-    public void approveExercise(Long id) {
-        Exercise exercise = exerciseRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Exercise with id " + id + " does not exist"));
-
-        exercise.setApproved(true);
-    }
-
 }

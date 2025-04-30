@@ -27,6 +27,5 @@ public class Exercise {
     private String equipmentName;
     private String musclesTargeted;
     private String description;
-    private boolean approved = false;
 
 }

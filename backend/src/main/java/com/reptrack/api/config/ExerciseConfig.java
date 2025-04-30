@@ -22,14 +22,12 @@ public class ExerciseConfig {
             barbellbenchPress.setEquipmentName("Bench");
             barbellbenchPress.setMusclesTargeted("Chest, Triceps, Front Delts");
             barbellbenchPress.setDescription("Test Description");
-            barbellbenchPress.setApproved(true);
 
             Exercise dumbbellbenchPress = new Exercise();
             dumbbellbenchPress.setName("Dumbbell Bench Press");
             dumbbellbenchPress.setEquipmentName("Bench");
             dumbbellbenchPress.setMusclesTargeted("Chest, Triceps, Front Delts");
             dumbbellbenchPress.setDescription("Test Description 2");
-            dumbbellbenchPress.setApproved(true);
 
             repository.saveAll(List.of(barbellbenchPress, dumbbellbenchPress));
         };

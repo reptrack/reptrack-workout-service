@@ -1,5 +1,6 @@
 jwt:
   secret: ${JWT_SECRET}
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/reptrack
@@ -15,3 +16,21 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  redis:
+    host: localhost
+    port: 6379
+
+logging:
+  level:
+    root: DEBUG
+    org:
+      springframework: DEBUG
+      hibernate: INFO
+      apache.catalina: DEBUG
+      org.springframework.web: DEBUG
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always

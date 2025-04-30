@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.reptrack.api.security.user.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,15 +24,20 @@ import java.util.stream.Collectors;
 @Service
 public class WorkoutLogService {
 
+    private static final String LEADERBOARD_KEY = "leaderboard:workouts";
     private final WorkoutLogRepository workoutLogRepository;
     private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate;
+
 
     @Autowired
     public WorkoutLogService(
-            WorkoutLogRepository workoutLogRepository
-            , UserRepository userRepository) {
+            WorkoutLogRepository workoutLogRepository,
+            UserRepository userRepository,
+            RedisTemplate<String, String> redisTemplate) {
         this.workoutLogRepository = workoutLogRepository;
         this.userRepository = userRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     public WorkoutLog getWorkoutLogById(Long id, String email) {
@@ -82,7 +88,32 @@ public class WorkoutLogService {
             existing.setExercises(newLog.getExercises());
         }
 
-        return workoutLogRepository.save(existing);
+        WorkoutLog updated = workoutLogRepository.save(existing);
+
+        for (WorkoutExercise ex : updated.getExercises()) {
+            String exerciseName = ex.getName();
+            String userEmail = updated.getUser().getEmail();
+
+            // Get max set with highest weight for this exercise
+            WorkoutExercise.WorkoutSet bestSet = ex.getSets().stream()
+                    .max((a, b) -> Float.compare(a.getWeight(), b.getWeight()))
+                    .orElse(null);
+
+            if (bestSet == null) continue;
+
+            int totalSets = ex.getSets().size();
+
+            // Create a unique member string
+            String redisValue = String.format("%s|%s|%d|%d|%d", userEmail, exerciseName,
+                    (int) bestSet.getWeight(), bestSet.getReps(), totalSets);
+
+            redisTemplate.opsForZSet().add("leaderboard:" + exerciseName + ":weight", redisValue, bestSet.getWeight());
+            redisTemplate.opsForZSet().add("leaderboard:" + exerciseName + ":reps", redisValue, bestSet.getReps());
+            redisTemplate.opsForZSet().add("leaderboard:" + exerciseName + ":sets", redisValue, totalSets);
+        }
+
+
+        return updated;
     }
 
     public List<WorkoutLog> getWorkoutLogsForUser(String email) {
@@ -101,7 +132,6 @@ public class WorkoutLogService {
         log.setName(dto.getName());
         log.setDescription(dto.getDescription());
         log.setDate(dto.getDate());
-        log.setCompleted(false);
         log.setUser(userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")));
 
@@ -119,13 +149,47 @@ public class WorkoutLogService {
         WorkoutExercise exercise = new WorkoutExercise();
         exercise.setName(dto.getName());
         exercise.setSets(dto.getSets().stream()
-                .map(s -> new WorkoutExercise.WorkoutSet(s.getReps(), s.getWeight(), s.isWarmup(), s.isCompleted()))
+                .map(s -> new WorkoutExercise.WorkoutSet(s.getReps(), s.getWeight()))
                 .collect(Collectors.toList()));
         return exercise;
     }
 
     public WorkoutLog save(WorkoutLog log) {
-        return workoutLogRepository.save(log);
+        if (log.getUser() == null) {
+            throw new IllegalStateException("WorkoutLog user is null before saving.");
+        }
+        if (log.getUser().getEmail() == null) {
+            throw new IllegalStateException("WorkoutLog user email is null before saving.");
+        }
+        // Optional: log to console
+        System.out.println("Saving log for user: " + log.getUser().getEmail());
+
+        WorkoutLog savedLog = workoutLogRepository.save(log);
+
+        for (WorkoutExercise ex : savedLog.getExercises()) {
+            String exerciseName = ex.getName();
+            String userEmail = savedLog.getUser().getEmail();
+
+            // Get max set with highest weight for this exercise
+            WorkoutExercise.WorkoutSet bestSet = ex.getSets().stream()
+                    .max((a, b) -> Float.compare(a.getWeight(), b.getWeight()))
+                    .orElse(null);
+
+            if (bestSet == null) continue;
+
+            int totalSets = ex.getSets().size();
+
+            // Create a unique member string
+            String redisValue = String.format("%s|%s|%d|%d|%d", userEmail, exerciseName,
+                    (int) bestSet.getWeight(), bestSet.getReps(), totalSets);
+
+            redisTemplate.opsForZSet().add("leaderboard:" + exerciseName + ":weight", redisValue, bestSet.getWeight());
+            redisTemplate.opsForZSet().add("leaderboard:" + exerciseName + ":reps", redisValue, bestSet.getReps());
+            redisTemplate.opsForZSet().add("leaderboard:" + exerciseName + ":sets", redisValue, totalSets);
+        }
+
+
+        return savedLog;
     }
 
     public Page<WorkoutLog> getWorkoutLogsForUser(String email, Pageable pageable) {

@@ -41,9 +41,6 @@ public class WorkoutLog {
     @JsonManagedReference
     private List<WorkoutExercise> exercises = new ArrayList<>();
 
-    @Column(nullable = false)
-    private boolean completed = false;
-
     public void addExercise(WorkoutExercise exercise) {
         if (exercise != null) {
             exercise.setLog(this);
