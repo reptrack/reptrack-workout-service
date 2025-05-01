@@ -1,155 +1,167 @@
-# RepTrack
+# 🏋️ RepTrack
 
-A comprehensive workout tracking application that helps users log, track, and manage their fitness routines.
+RepTrack is a full-stack workout tracking platform that allows users to log workouts, track progress, and view exercise-based leaderboards. The backend is powered by Spring Boot and PostgreSQL, while the frontend (in progress) uses React and TypeScript.
 
-## Project Structure
+---
 
-This repository contains both the frontend and backend components of the RepTrack application:
+## 📁 Project Structure
 
-- `frontend/` - React-based web application
-- `backend/` - Spring Boot REST API
-
-## Frontend
-
-The frontend is built with React, TypeScript, and Vite, providing a modern and responsive user interface.
-
-### Features
-- User authentication and authorization
-- Exercise library browsing
-- Workout logging and tracking
-- Exercise set tracking
-- Responsive design for mobile and desktop
-
-### Tech Stack
-- React 19
-- TypeScript
-- Vite
-- ESLint
-
-### Getting Started with Frontend
-
-1. Navigate to the frontend directory:
-```bash
-cd frontend
+```
+reptrack-main/
+├── backend/     # Spring Boot REST API with Swagger Docs
+└── frontend/    # React + TypeScript SPA (TODO)
 ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+---
 
-3. Start the development server:
-```bash
-npm run dev
-```
+## ⚙️ Backend – Spring Boot API
 
-4. Build for production:
-```bash
-npm run build
-```
+### ✨ Features
 
-## Backend
+- Java 17 + Spring Boot 3.2  
+- RESTful API for workout and exercise management  
+- PostgreSQL database  
+- Redis caching for leaderboard performance  
+- Docker Compose support  
+- Swagger UI for live API documentation
 
-The backend is a robust RESTful API built with Spring Boot, providing secure authentication and comprehensive workout tracking functionality.
+---
 
-### Features
-- JWT-based authentication
-- User management with role-based authorization
-- Exercise library management
-- Workout logging and tracking
-- Exercise set tracking within workouts
-- Exercise approval system
+### 🚀 Getting Started
 
-### Tech Stack
-- Java 17
-- Spring Boot 3.2.3
-- Spring Security
-- Spring Data JPA
-- PostgreSQL
-- JWT Authentication
-- Maven
+#### Prerequisites
+
+- Java 17  
+- Maven  
 - Docker
 
-### Getting Started with Backend
+#### Run with Maven
 
-1. Navigate to the backend directory:
 ```bash
 cd backend
-```
-
-2. Set up environment variables:
-```bash
-# Create a .env file with:
-JWT_SECRET=your_jwt_secret_here
-```
-
-3. Build the project:
-```bash
-./mvnw clean install
-```
-
-4. Run the application:
-```bash
 ./mvnw spring-boot:run
 ```
 
-5. Run tests:
-```bash
-./mvnw test
-```
+#### Run with Docker
 
-## API Documentation
-
-The backend API provides the following endpoints:
-
-### Authentication
-```
-POST /api/v1/auth/register     - Register new user
-POST /api/v1/auth/authenticate - Login user
-```
-
-### Exercises
-```
-GET    /api/v1/exercises         - List exercises
-POST   /api/v1/exercises         - Create exercise
-DELETE /api/v1/exercises/{id}    - Delete exercise
-PATCH  /api/v1/exercises/{id}    - Update exercise
-PATCH  /api/v1/exercises/{id}/approve - Approve exercise
-```
-
-### Workout Logs
-```
-GET    /api/v1/workout-logs      - Get user's workout logs
-GET    /api/v1/workout-logs/{id} - Get specific workout
-POST   /api/v1/workout-logs      - Create workout log
-PUT    /api/v1/workout-logs/{id} - Update workout log
-DELETE /api/v1/workout-logs/{id} - Delete workout log
-```
-
-### Workout Exercises
-```
-POST   /api/v1/workout-exercises/log/{logId} - Add exercise to workout
-PATCH  /api/v1/workout-exercises/{id}        - Update workout exercise
-DELETE /api/v1/workout-exercises/{id}        - Remove exercise from workout
-```
-
-## Docker Deployment
-
-Both frontend and backend can be deployed using Docker:
-
-1. Build and run the backend:
 ```bash
 cd backend
 docker-compose up --build
 ```
 
-2. Build and run the frontend:
+---
+
+### 🧪 Running Tests
+
 ```bash
-cd frontend
-docker build -t reptrack-frontend .
-docker run -p 3000:80 reptrack-frontend
+cd backend
+./mvnw test
 ```
 
-## License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📘 Swagger API Documentation
+
+Once running, access live API docs at:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+## 📌 Full API Endpoints
+
+### Authentication
+```
+POST   /api/v1/auth/register           - Register new user
+POST   /api/v1/auth/authenticate       - Login and receive JWT
+```
+
+### Exercises
+```
+GET    /api/v1/exercises               - List exercises
+POST   /api/v1/exercises               - Create exercise
+PATCH  /api/v1/exercises/{id}          - Update exercise
+DELETE /api/v1/exercises/{id}          - Delete exercise
+PATCH  /api/v1/exercises/{id}/approve  - Approve an exercise
+```
+
+### Workout Logs
+```
+GET    /api/v1/workout-logs            - List all user workout logs
+GET    /api/v1/workout-logs/{id}       - Retrieve a single log
+POST   /api/v1/workout-logs            - Create a new log
+PUT    /api/v1/workout-logs/{id}       - Update a workout log
+DELETE /api/v1/workout-logs/{id}       - Delete a workout log
+```
+
+### Workout Exercises
+```
+POST   /api/v1/workout-exercises/log/{logId} - Add exercise to workout log
+PATCH  /api/v1/workout-exercises/{id}        - Update workout exercise
+DELETE /api/v1/workout-exercises/{id}        - Delete exercise from log
+```
+
+### Leaderboard
+```
+GET    /api/v1/leaderboard/ping-redis        - Check Redis health
+GET    /api/v1/leaderboard/{exercise}/{metric} - Get leaderboard by metric (e.g., weight, sets, reps)
+```
+
+---
+
+## 🐳 Docker Deployment
+
+To run everything with Docker:
+
+### Backend
+
+```bash
+cd backend
+docker-compose up --build
+```
+
+### Frontend
+
+```bash
+TODO
+```
+
+---
+
+## 🎨 Frontend – React + TypeScript
+
+### Features (TODO)
+
+- JWT-based authentication
+- Workout logging interface
+- Leaderboard views per exercise
+- Responsive design for all devices
+
+### Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+### Getting Started
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 📦 Tech Summary
+
+- **Backend:** Java 17, Spring Boot 3, PostgreSQL, Redis, Swagger  
+- **Frontend:** React, TypeScript, Vite
+- **CI/CD & DevOps:** Docker, GitHub Actions
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
