@@ -1,6 +1,6 @@
 # 🏋️ RepTrack
 
-RepTrack is a full-stack workout tracking platform that allows users to log workouts, track progress, and view exercise-based leaderboards. The backend is powered by Spring Boot and PostgreSQL, while the frontend (in progress) uses React and TypeScript.
+RepTrack is a full-stack workout tracking platform that allows users to log workouts, track progress, and view exercise-based leaderboards. The backend is powered by Spring Boot and PostgreSQL, while the frontend (TODO) uses React and TypeScript.
 
 ---
 
